@@ -10,46 +10,15 @@ import java.util.Scanner;
 public class Article {
     private Query query;
 
-    public static class Query {
-        private List<SearchResult> search;
-        public List<SearchResult> getSearch() { return search; }
+    public Query getQuery() {
+        return query;
     }
-
-    public static class SearchResult {
-        private String title;
-        private long pageid;
-        private int wordcount;
-        private String snippet;
-        private String timestamp;
-
-        public String getTitle() { return title; }
-
-        public long getPageid() { return pageid; }
-
-        public int getWordcount() { return wordcount; }
-
-        public String getSnippet() {
-            if (snippet != null) {
-                return snippet.replaceAll("<[^>]*>", "");
-            }
-            return snippet;
-        }
-
-        public String getTimestamp() { return timestamp; }
-
-        public String getArticleUrl() {
-            return "https://ru.wikipedia.org/w/index.php?curid=" + this.pageid;
-        }
-    }
-
-    public Query getQuery() { return query; }
 
     public static void parseSearch(String jsonResponse) {
         Gson gson = new Gson();
 
         try {
             Article wikiResponse = gson.fromJson(jsonResponse, Article.class);
-
             List<SearchResult> searchResults = wikiResponse.getQuery().getSearch();
 
             System.out.println("Найдено результатов: " + searchResults.size());
@@ -60,14 +29,13 @@ public class Article {
                 System.out.println("Cтатья № " + i);
                 i++;
                 System.out.println("Заголовок: " + result.getTitle());
-                //System.out.println("ID страницы: " + result.getPageid());
                 System.out.println("Сниппет: " + result.getSnippet());
                 System.out.println("Слов: " + result.getWordcount());
                 System.out.println("Обновлено: " + result.getTimestamp());
                 System.out.println("-------------------------------------");
             }
 
-            if (Desktop.isDesktopSupported() || !searchResults.isEmpty()) {
+            if (Desktop.isDesktopSupported() && !searchResults.isEmpty()) {
                 Desktop desktop = Desktop.getDesktop();
                 System.out.println("Выберете номер статьи:");
 
@@ -76,11 +44,9 @@ public class Article {
 
                 if (input > searchResults.size()) {
                     System.out.println("Не корректный выбор: input > количества статей!");
-                }
-                else if (input < 1) {
+                } else if (input < 1) {
                     System.out.println("Не корректный выбор: input < количества статей!");
-                }
-                else {
+                } else {
                     SearchResult selectedArticle = searchResults.get(input - 1);
                     String articleUrl = selectedArticle.getArticleUrl();
 

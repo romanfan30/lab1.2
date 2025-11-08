@@ -74,7 +74,13 @@ public class Article {
                 Scanner scanner = new Scanner(System.in);
                 int input = Integer.parseInt(scanner.nextLine());
 
-                if (input >= 1 && input <= searchResults.size()) {
+                if (input > searchResults.size()) {
+                    System.out.println("Не корректный выбор: input > количества статей!");
+                }
+                else if (input < 1) {
+                    System.out.println("Не корректный выбор: input < количества статей!");
+                }
+                else {
                     SearchResult selectedArticle = searchResults.get(input - 1);
                     String articleUrl = selectedArticle.getArticleUrl();
 
@@ -82,9 +88,6 @@ public class Article {
                     System.out.println("URL: " + articleUrl);
 
                     desktop.browse(new URI(articleUrl));
-                }
-                else {
-                    System.out.println("Эль проблема!");
                 }
             }
         } catch (Exception e) {

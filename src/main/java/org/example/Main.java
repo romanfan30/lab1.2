@@ -14,7 +14,6 @@ public class Main {
         System.out.println("Вы ввели: " + input);
 
         String jsonstr = searchWikiGetStr(input);
-        System.out.println(jsonstr);
         parseSearch(jsonstr);
         scanner.close();
     }

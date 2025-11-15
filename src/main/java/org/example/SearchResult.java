@@ -1,6 +1,8 @@
 package org.example;
 
 public class SearchResult {
+    public static final String URL_PAGE_PREFIX = "https://ru.wikipedia.org/w/index.php?curid=";
+
     private String title;
     private long pageid;
     private int wordcount;
@@ -21,6 +23,6 @@ public class SearchResult {
     public String getTimestamp() { return timestamp; }
 
     public String getArticleUrl() {
-        return "https://ru.wikipedia.org/w/index.php?curid=" + this.pageid;
+        return URL_PAGE_PREFIX + this.pageid;
     }
 }

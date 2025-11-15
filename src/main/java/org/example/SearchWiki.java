@@ -11,12 +11,13 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class SearchWiki {
+    public static final String URL_SEARCH_PREFIX = "https://ru.wikipedia.org/w/api.php?action=query&list=search&utf8=&format=json&srsearch=\"";
+
     public static String searchWikiGetStr(String search) {
         String jsonResponse = "";
         try {
             String encodedSearch = URLEncoder.encode(search, "UTF-8");
-            String urlStr = "https://ru.wikipedia.org/w/api.php?action=query&list=search&utf8=&format=json&srsearch=\"" +
-                    encodedSearch + "\"";
+            String urlStr = URL_SEARCH_PREFIX + encodedSearch + "\"";
 
             URL url = new URL(urlStr);
 
